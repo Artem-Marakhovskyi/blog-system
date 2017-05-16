@@ -1,0 +1,45 @@
+﻿@using DataAccessLayer.Entities;
+@model Article
+@{
+    ViewBag.Title = "Info Page";
+}
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2">
+        <div class="column">
+            <div class="ui raised segment">
+                <a class="ui red ribbon label">Article</a>
+                <div style="padding:3%;">
+                    <h3 class="ui header">@Model.Title</h3>
+
+                    <div class="ui text container" style="margin-bottom:2%;">
+                        <span>@Model.Content</span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @if (!String.IsNullOrEmpty(Model.Tags))
+                    {
+                        foreach (var item in Model.Tags.Split('#'))
+                        {
+                            if (item != string.Empty)
+                            {
+                                <a class="ui red tag label">@item</a>
+                            }
+                        }
+                    }
+
+                </div>
+                <div class="form-group pull-right">
+                    <p class="article">
+                        <strong>
+                         @Model.Data
+                        </strong>
+                    </p>
+                </div>
+                <div class="form-group" style="margin-bottom:5%;">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

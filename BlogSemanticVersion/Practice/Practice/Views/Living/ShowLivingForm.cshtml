@@ -1,0 +1,62 @@
+﻿@using Practice.ViewModels.Living;
+@model LivingFormViewModel
+
+@{
+    ViewBag.Title = "Living page";
+}
+
+<div class="row">
+    <div class="col-md-offset-1 col-md-10">
+        <div class="row">
+            <div class="col-md-7">
+                <div class="panel">
+                    <div class="ui feed">
+
+                        @{
+                            foreach (var article in Model.Feedbacks)
+                            {
+                                <div class="event">
+                                    <div class="ui avatar image">
+                                        <img src="@Model.GetRandomImage()" />
+                                    </div>
+                                    <div class="content">
+                                        <div class="summary">
+                                            <a>@article.Login</a> posted feedback on our page
+                                            <div class="date">
+                                                @article.Data 
+                                            </div>
+                                        </div>
+                                        <div class="extra text">
+                                            @article.Comment
+                                        </div>
+                                        <div class="meta">
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                </div>
+            </div>
+            <div class="col-md-5">
+                <h4>Leave your feedback</h4>
+                <form asp-controller="Living" asp-action="ShowLivingForm" method="post">
+                    <div class="form-group">
+                        @Html.EditorFor(model => model.Name, new
+                            {
+                                htmlAttributes = new { @class = "form-control", @placeholder = "Enter your name...", @required = "required" }
+                            })
+                    </div>
+                    <div class="form-group">
+                        <textarea name="Feedback" style="resize: none" rows="5" class="form-control" placeholder="Enter your feedback here..." pattern=".{20,}" required></textarea>
+                    </div>
+                    <button class="ui primary submit labeled icon button" type="submit" style="margin-bottom:5%;">
+                        <i class="icon edit"></i> Leave feedback
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+﻿@using DataAccessLayer.Entities;
+@model Form
+@{
+    ViewBag.Title = "Result Page";
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowResultForm</title>
+</head>
+<body>
+    <div>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-offset-4">
+                    <div class="column">
+                        <div class="ui raised text segment">
+                            <a class="ui blue ribbon label">Test Result</a>
+                            <br />
+                            <h3 style="margin-top:-5px ;text-align:center" class="ui header">Result of test</h3>
+                            <p>
+                                <label> Your name:@Model.Name </label>
+                            </p>
+                            <p>
+                                <label> Pnone number:@Model.Phone</label>
+                            </p>
+                            <p>
+                                <label>E-mail:@Model.Email</label>
+                            </p>
+                            <p>
+                                <label>City:@Model.City</label>
+                            </p>
+                            <p>
+                                <label>Age:@Model.Age</label>
+                            </p>
+                            <p>
+                                <label>Browser:@Model.FavouriteBrowser</label>
+                            </p>
+                            <p>
+                                <label>Prefereble of something:@Model.Preferable</label>
+                            </p>
+                            <p>
+                                <label>Estimate of site:@Model.MarkOfForm</label>
+                            </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>

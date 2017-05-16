@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <script src="~/Scripts/JavaScript.js"></script>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    <style>
+        #scrollup {
+            position: fixed; /* фиксированная позиция */
+            right: 10px; /* отступ слева */
+            bottom: 10px; /* отступ снизу */
+            display: none; /* спрятать блок */
+            cursor: pointer;
+        }
+    </style>
+  
+    <div class="ui stackable menu" style="margin-top:0px;">
+        <div class="item">
+            <img src="~/Content/img/узфь.svg" />
+        </div>
+        <div class="item">
+            @Html.ActionLink("Main", "ShowMainForm", "Main")
+        </div>
+        <div class="item">
+            @Html.ActionLink("Living", "ShowLivingForm", "Living")
+        </div>
+        <div class="item">
+            @Html.ActionLink("Questionary", "ShowQuestionaryForm", "Questionary")
+        </div>
+        <div class="right menu">
+            @Html.Partial("_LoginPartial")
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <div id="scrollup">
+            <img src="~/Content/img/Снимок.PNG" />
+        </div>
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My ASP.NET Application </p>
+
+        </footer>
+    </div>
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
