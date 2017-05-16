@@ -13,7 +13,7 @@ namespace Practice.ViewModels.Main
 
         public string Title { get; set; }
         public string Content { get; set; }
-        public string[] SetTags { get; set; }
+        public string[] SetTags { get; set; } = new string[10];
 
         public string ReadyTag
         {

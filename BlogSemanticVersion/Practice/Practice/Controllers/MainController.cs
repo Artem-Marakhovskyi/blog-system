@@ -43,7 +43,6 @@ namespace Practice.Controllers
             model.Articles = articleReadRepository.GetArticles() as List<Article>;
             model.Tags = tagReadRepository.GetTags();
             model.Quizes = quizReadRepository.GetQuizes();
-            identityRepository.AddRolesToIdentity();
 
             return View(model);
         }
@@ -54,6 +53,14 @@ namespace Practice.Controllers
             var id = Convert.ToInt32(Request.QueryString["id"]);
             var itemArticle = articleReadRepository.GetArticleById(id);
             return View(itemArticle);
+        }
+
+        [HttpPost]
+        public ActionResult Info(Feedback feedback)
+        {
+            // MY CODE
+            //return View(itemArticle);
+            return View();
         }
 
         [HttpPost]

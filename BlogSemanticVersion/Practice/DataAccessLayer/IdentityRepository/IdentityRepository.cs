@@ -19,6 +19,8 @@ namespace DataAccessLayer.IdentityRepository
                 _context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole { Id = "1", Name = "Admin" });
                 _context.Roles.Add(new Microsoft.AspNet.Identity.EntityFramework.IdentityRole { Id = "2", Name = "User" });
             }
+
+            _context.SaveChanges();
         }
     }
 }
