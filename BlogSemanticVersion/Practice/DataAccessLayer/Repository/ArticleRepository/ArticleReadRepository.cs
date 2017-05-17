@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repository.ArticleRepository.Interface;
@@ -21,7 +22,7 @@ namespace DataAccessLayer.Repository.ArticleRepository
         /// <returns></returns>
         public Article GetArticleById(int id)
         {
-           return context.Articles.FirstOrDefault(x => x.ArticleId.Equals(id));
+           return context.Articles.Include(e=>e.Feedbacks).FirstOrDefault(x => x.ArticleId.Equals(id));
         }
 
         /// <summary>

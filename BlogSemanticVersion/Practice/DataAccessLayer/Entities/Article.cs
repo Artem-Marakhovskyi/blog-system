@@ -1,4 +1,7 @@
-﻿namespace DataAccessLayer.Entities
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace DataAccessLayer.Entities
 {
     public class Article
     {
@@ -7,5 +10,7 @@
         public string Content { get; set; }
         public string Data { get; set; }
         public string Tags { get; set; }
+
+        public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
     }
 }

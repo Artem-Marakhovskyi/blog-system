@@ -98,7 +98,13 @@
                                 <a class="ui red ribbon label">Article</a>
                                 @if (User.IsInRole("Admin"))
                                 {
-                                    using (Html.BeginForm("RemoveArticle", "Main", FormMethod.Post))
+                                    using (Html.BeginForm(new
+                                    {
+                                        action = "RemoveArticle",
+                                        controller = "Main",
+                                        method = FormMethod.Post,
+                                        id = item.ArticleId
+                                    }))
                                     {
                                         <button type="submit" name="id" value="@item.ArticleId" class="ui icon button pull-right">
                                             <i class="trash icon"></i>
@@ -141,9 +147,9 @@
                                 {
                                     <div class="form-group">
                                         @Html.EditorFor(model => model.Title, new
-                               {
-                                   htmlAttributes = new { @class = "form-control", @placeholder = "Title for article ....", @required = "required" }
-                               })
+                                   {
+                                       htmlAttributes = new { @class = "form-control", @placeholder = "Title for article ....", @required = "required" }
+                                   })
                                     </div>
                                     <div class="form-group">
 
@@ -240,7 +246,7 @@
     $('#call-modal-4').on('click', function () {
         modal = $(this).attr('data-modal');
         $('#' + modal + '.modal')
-        .modal('setting', 'transition', 'horizontal flip')
-        .modal('show');
+            .modal('setting', 'transition', 'horizontal flip')
+            .modal('show');
     });
 </script>

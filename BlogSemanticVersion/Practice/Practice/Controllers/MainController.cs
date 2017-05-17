@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using DataAccessLayer.Repository.QuizRepository;
 using DataAccessLayer.Entities;
 using DataAccessLayer.IdentityRepository;
+using DataAccessLayer.Repository.FeedbackRepository;
 
 namespace Practice.Controllers
 {
@@ -19,6 +20,9 @@ namespace Practice.Controllers
         private readonly QuizWriteRepository quizWriteRepository;
         private readonly TagWriteRepository tagWriteRepository;
         private readonly IdentityRepository identityRepository;
+        private readonly FeedbackReadRepository feedbackReadRepository;
+        private readonly FeedbackWriteRepository feedbackWriteRepository;
+
 
         private MainViewModel model = new MainViewModel();
 
@@ -31,6 +35,8 @@ namespace Practice.Controllers
             quizReadRepository = new QuizReadRepository();
             quizWriteRepository = new QuizWriteRepository();
             identityRepository = new IdentityRepository();
+            feedbackReadRepository = new FeedbackReadRepository();
+            feedbackWriteRepository = new FeedbackWriteRepository();
         }
 
         [HttpGet]
@@ -48,9 +54,8 @@ namespace Practice.Controllers
         }
 
         [HttpGet]
-        public ActionResult Info()
+        public ActionResult Info(int id)
         {
-            var id = Convert.ToInt32(Request.QueryString["id"]);
             var itemArticle = articleReadRepository.GetArticleById(id);
             return View(itemArticle);
         }
@@ -58,9 +63,10 @@ namespace Practice.Controllers
         [HttpPost]
         public ActionResult Info(Feedback feedback)
         {
-            // MY CODE
-            //return View(itemArticle);
-            return View();
+            feedback.Login = HttpContext.User.Identity.Name;
+            feedbackWriteRepository.AddFeedback(feedback);
+            
+            return RedirectToAction("Info", new {id = feedback.ArticleId});
         }
 
         [HttpPost]
