@@ -12,5 +12,8 @@ namespace DataAccessLayer.Entities
         public string Tags { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
+
+        public ICollection<UserArticleLike> UserArticleLikes { get; set; } = new List<UserArticleLike>();
     }
 }
+

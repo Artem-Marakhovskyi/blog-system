@@ -22,7 +22,7 @@ namespace DataAccessLayer.Repository.ArticleRepository
         /// <returns></returns>
         public Article GetArticleById(int id)
         {
-           return context.Articles.Include(e=>e.Feedbacks).FirstOrDefault(x => x.ArticleId.Equals(id));
+           return context.Articles.Include(e=>e.Feedbacks).Include(e=>e.UserArticleLikes).FirstOrDefault(x => x.ArticleId.Equals(id));
         }
 
         /// <summary>

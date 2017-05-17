@@ -78,6 +78,7 @@
     <Compile Include="Entities\Form.cs" />
     <Compile Include="Entities\Quiz.cs" />
     <Compile Include="Entities\Tag.cs" />
+    <Compile Include="Entities\UserArticleLike.cs" />
     <Compile Include="IdentityRepository\IdentityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\ArticleRepository\ArticleReadRepository.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="Repository\TagRepositoy\Interface\ITagWriteRepository.cs" />
     <Compile Include="Repository\TagRepositoy\TagReadRepository.cs" />
     <Compile Include="Repository\TagRepositoy\TagWriteRepository.cs" />
+    <Compile Include="Repository\UserArticleLikesRepository\UserArticleLikesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">

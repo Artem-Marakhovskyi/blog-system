@@ -8,6 +8,7 @@ using DataAccessLayer.Repository.QuizRepository;
 using DataAccessLayer.Entities;
 using DataAccessLayer.IdentityRepository;
 using DataAccessLayer.Repository.FeedbackRepository;
+using DataAccessLayer.Repository.UserArticleLikesRepository;
 
 namespace Practice.Controllers
 {
@@ -22,9 +23,10 @@ namespace Practice.Controllers
         private readonly IdentityRepository identityRepository;
         private readonly FeedbackReadRepository feedbackReadRepository;
         private readonly FeedbackWriteRepository feedbackWriteRepository;
-
-
         private MainViewModel model = new MainViewModel();
+        private UserArticleLikesRepository userArticleLikeRepository;
+
+
 
         public MainController()
         {
@@ -37,6 +39,8 @@ namespace Practice.Controllers
             identityRepository = new IdentityRepository();
             feedbackReadRepository = new FeedbackReadRepository();
             feedbackWriteRepository = new FeedbackWriteRepository();
+            userArticleLikeRepository = new UserArticleLikesRepository();
+
         }
 
         [HttpGet]
@@ -65,8 +69,8 @@ namespace Practice.Controllers
         {
             feedback.Login = HttpContext.User.Identity.Name;
             feedbackWriteRepository.AddFeedback(feedback);
-            
-            return RedirectToAction("Info", new {id = feedback.ArticleId});
+
+            return RedirectToAction("Info", new { id = feedback.ArticleId });
         }
 
         [HttpPost]
@@ -106,6 +110,14 @@ namespace Practice.Controllers
 
             articleWriteRepository.AddArticle(newArticle);
             return RedirectToAction("ShowMainForm", "Main");
+        }
+
+        [HttpPost]
+        public ActionResult Like(int articleId)
+        {
+            userArticleLikeRepository.Like(new UserArticleLike() { ArticleId = articleId, Username = User.Identity.Name });
+
+            return RedirectToAction("Info", new { id = articleId });
         }
     }
 }

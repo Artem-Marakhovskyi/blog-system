@@ -14,6 +14,7 @@ namespace DataAccessLayer.Context
         public virtual DbSet<Form> Forms { get; set; }
         public virtual DbSet<Quiz> Quizs { get; set; }
         public virtual DbSet<Tag> Tags { get; set; }
+        public virtual DbSet<UserArticleLike> UserArticleLikes { get; set; }
 
         public BlogEntities() : base(@"data source=(LocalDb)\MSSQLLocalDB;
                         initial catalog=IdentityBlogEntity;
