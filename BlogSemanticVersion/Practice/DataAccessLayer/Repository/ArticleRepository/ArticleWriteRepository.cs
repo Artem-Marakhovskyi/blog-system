@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer.Entities;
 using DataAccessLayer.Repository.ArticleRepository.Interface;
 using DataAccessLayer.Context;
@@ -19,6 +20,26 @@ namespace DataAccessLayer.Repository.ArticleRepository
         /// <param name="article"></param>
         public void AddArticle(Article article)
         {
+            foreach (var articleTag in article.Tags)
+            {
+                if (context.Tags.FirstOrDefault(e => e.Content.Equals(articleTag.Content)) == null)
+                {
+                    context.Tags.Add(new Tag()
+                    {
+                        Content = articleTag.Content.Replace(" ","_").ToLowerInvariant()
+                    });
+                }
+            }
+            context.SaveChanges();
+
+            List<Tag> tags = new List<Tag>();
+            foreach (var articleTag in article.Tags)
+            {
+                tags.Add(context.Tags.FirstOrDefault(e=>e.Content == articleTag.Content));
+            }
+
+            article.Tags = tags;
+
             context.Articles.Add(article);
             context.SaveChanges();
         }

@@ -11,6 +11,8 @@ namespace Practice.ViewModels.Main
         public List<Tag> Tags { get; set; }
         public List<Quiz> Quizes { get; set; }
 
+        public string SearchTag { get; set; }
+
         public string Title { get; set; }
         public string Content { get; set; }
         public string[] SetTags { get; set; } = new string[10];

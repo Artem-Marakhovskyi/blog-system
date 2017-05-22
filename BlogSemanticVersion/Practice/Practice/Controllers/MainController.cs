@@ -4,6 +4,7 @@ using DataAccessLayer.Repository.ArticleRepository;
 using DataAccessLayer.Repository.TagRepositoy;
 using Practice.ViewModels.Main;
 using System.Collections.Generic;
+using System.Linq;
 using DataAccessLayer.Repository.QuizRepository;
 using DataAccessLayer.Entities;
 using DataAccessLayer.IdentityRepository;
@@ -44,13 +45,18 @@ namespace Practice.Controllers
         }
 
         [HttpGet]
-        public ActionResult ShowMainForm()
+        public ActionResult ShowMainForm(string tag)
         {
             if (Session["Answer"] == null)
             {
                 Session["Answer"] = true;
             }
-            model.Articles = articleReadRepository.GetArticles() as List<Article>;
+            if (!String.IsNullOrWhiteSpace(tag))
+            {
+                model.SearchTag = tag;
+            }
+
+            model.Articles = articleReadRepository.GetArticles(tag) as List<Article>;
             model.Tags = tagReadRepository.GetTags();
             model.Quizes = quizReadRepository.GetQuizes();
 
@@ -105,7 +111,10 @@ namespace Practice.Controllers
                 Content = form.Content,
                 Data = DateTime.Now.ToShortDateString(),
                 Title = form.Title,
-                Tags = form.ReadyTag
+                Tags = new List<Tag>(form.SetTags.Select(x=>new Tag()
+                {
+                    Content = x
+                }))
             };
 
             articleWriteRepository.AddArticle(newArticle);

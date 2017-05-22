@@ -7,7 +7,7 @@ using DataAccessLayer.Context;
 
 namespace DataAccessLayer.Repository.ArticleRepository
 {
-    public class ArticleReadRepository  :IArticleReadRepository
+    public class ArticleReadRepository : IArticleReadRepository
     {
         private readonly BlogEntities context;
 
@@ -22,16 +22,42 @@ namespace DataAccessLayer.Repository.ArticleRepository
         /// <returns></returns>
         public Article GetArticleById(int id)
         {
-           return context.Articles.Include(e=>e.Feedbacks).Include(e=>e.UserArticleLikes).FirstOrDefault(x => x.ArticleId.Equals(id));
+            return context.Articles
+                 .Include(e => e.Feedbacks)
+                 .Include(e => e.UserArticleLikes)
+                 .Include(e => e.Tags)
+                 .FirstOrDefault(x => x.ArticleId.Equals(id));
         }
 
-        /// <summary>
-        /// Get all articles from DataBase
-        /// </summary>
-        /// <returns></returns>
+        public ICollection<Article> GetArticles(string tag)
+        {
+            if (tag == null)
+            {
+                return GetArticles();
+            }
+            tag = tag.ToLowerInvariant();
+            var tagEntity = context.Tags.FirstOrDefault(e=>e.Content == tag);
+
+            if (tagEntity == null)
+            {
+                return new List<Article>();
+            }
+
+            var articles = context.Articles.Include(e => e.Feedbacks)
+                .Include(e => e.UserArticleLikes)
+                .Include(e => e.Tags)
+                .ToList();
+
+            return articles.Where(e => e.Tags.Any(z => z.Content == tagEntity.Content)).ToList();
+        }
+
         public ICollection<Article> GetArticles()
         {
-            return context.Articles.ToList();
+            return context.Articles.Include(e => e.Feedbacks)
+                .Include(e => e.UserArticleLikes)
+                .Include(e => e.Tags)
+                .ToList();
+
         }
     }
 }

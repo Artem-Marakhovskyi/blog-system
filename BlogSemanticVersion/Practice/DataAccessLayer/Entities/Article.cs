@@ -9,11 +9,12 @@ namespace DataAccessLayer.Entities
         public string Title { get; set; }
         public string Content { get; set; }
         public string Data { get; set; }
-        public string Tags { get; set; }
 
         public ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 
         public ICollection<UserArticleLike> UserArticleLikes { get; set; } = new List<UserArticleLike>();
+
+        public List<Tag> Tags { get; set; } = new List<Tag>();
     }
 }
 
