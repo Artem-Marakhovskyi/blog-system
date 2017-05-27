@@ -4,6 +4,7 @@ using DataAccessLayer.Repository.ArticleRepository;
 using DataAccessLayer.Repository.TagRepositoy;
 using Practice.ViewModels.Main;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DataAccessLayer.Repository.QuizRepository;
 using DataAccessLayer.Entities;
@@ -106,6 +107,23 @@ namespace Practice.Controllers
         [HttpPost]
         public ActionResult ShowMainForm(MainViewModel form, string authorName)
         {
+            string path = string.Empty;
+            if (Request.Files.Count > 0 && Request.Files[0].ContentType.Contains("image"))
+            {
+                var file = Request.Files[0];
+
+                if (file != null && file.ContentLength > 0)
+                {
+                    var fileName = Path.GetFileName(file.FileName);
+                     path = Path.Combine(Server.MapPath("~/App_Data/"), fileName);
+                    if (!Directory.Exists(path))
+                    {
+                        Directory.CreateDirectory(path);
+                    }
+                    file.SaveAs(path);
+                }
+            }
+
             var newArticle = new Article()
             {
                 Content = form.Content,
@@ -115,7 +133,8 @@ namespace Practice.Controllers
                 {
                     Content = x
                 })),
-                AuthorEmail = authorName
+                AuthorEmail = authorName,
+                FileName = path
             };
 
             articleWriteRepository.AddArticle(newArticle);
