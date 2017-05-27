@@ -21,7 +21,8 @@ namespace Practice
 
         private void AddRolesIfNotExists()
         {
-            new IdentityRepository().AddRolesToIdentity();
+            var identityRepository = new IdentityRepository();
+            identityRepository.AddRolesToIdentity();
         }
     }
 }

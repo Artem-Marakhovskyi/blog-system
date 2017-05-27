@@ -32,6 +32,12 @@
         <div class="item">
             @Html.ActionLink("Questionary", "ShowQuestionaryForm", "Questionary")
         </div>
+        @if (User.IsInRole("Admin"))
+        {
+            <div class="item">
+                @Html.ActionLink("Users", "List", "User")
+            </div>
+        }
         <div class="right menu">
             @Html.Partial("_LoginPartial")
         </div>

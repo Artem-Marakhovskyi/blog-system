@@ -104,7 +104,7 @@ namespace Practice.Controllers
         }
 
         [HttpPost]
-        public ActionResult ShowMainForm(MainViewModel form)
+        public ActionResult ShowMainForm(MainViewModel form, string authorName)
         {
             var newArticle = new Article()
             {
@@ -114,7 +114,8 @@ namespace Practice.Controllers
                 Tags = new List<Tag>(form.SetTags.Select(x=>new Tag()
                 {
                     Content = x
-                }))
+                })),
+                AuthorEmail = authorName
             };
 
             articleWriteRepository.AddArticle(newArticle);

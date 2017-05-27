@@ -20,7 +20,9 @@ namespace DataAccessLayer.Repository.ArticleRepository
         /// <param name="article"></param>
         public void AddArticle(Article article)
         {
-            foreach (var articleTag in article.Tags)
+            article.Author = context.Users.First(e => e.Email == article.AuthorEmail);
+
+            foreach (var articleTag in article.Tags.Where(e=>e.Content != null))
             {
                 if (context.Tags.FirstOrDefault(e => e.Content.Equals(articleTag.Content)) == null)
                 {
@@ -53,6 +55,18 @@ namespace DataAccessLayer.Repository.ArticleRepository
            var temp= context.Articles.FirstOrDefault(x => x.ArticleId == id);
             context.Articles.Remove(temp);
             context.SaveChanges();
+        }
+
+        public void EditArticle(Article article, string[] tags)
+        {
+            var dbArticle = context.Articles.FirstOrDefault(e => e.ArticleId == article.ArticleId);
+
+            dbArticle.Content = article.Content;
+            dbArticle.Title = article.Title;
+
+            dbArticle.Tags.AddRange(context.Tags.Where(e=>tags.Contains(e.Content)));
+            context.SaveChanges();
+
         }
     }
 }

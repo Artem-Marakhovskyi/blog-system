@@ -6,6 +6,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Practice.Models;
 using DataAccessLayer.Context;
+using DataAccessLayer.IdentityRepository;
 
 namespace Practice.Controllers
 {

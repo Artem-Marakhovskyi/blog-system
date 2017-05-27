@@ -102,6 +102,8 @@
     <Compile Include="Repository\TagRepositoy\TagReadRepository.cs" />
     <Compile Include="Repository\TagRepositoy\TagWriteRepository.cs" />
     <Compile Include="Repository\UserArticleLikesRepository\UserArticleLikesRepository.cs" />
+    <Compile Include="Repository\UserRepository\UserReadRepository.cs" />
+    <Compile Include="Repository\UserRepository\UserWriteRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config">

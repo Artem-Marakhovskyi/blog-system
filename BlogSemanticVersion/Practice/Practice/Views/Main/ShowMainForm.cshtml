@@ -1,4 +1,5 @@
-﻿@using Practice.ViewModels.Main;
+﻿@using System.Security.Principal
+@using Practice.ViewModels.Main;
 @model MainViewModel
 @{
     ViewBag.Title = "Main page";
@@ -95,13 +96,13 @@
                     <div class="col-sm-12">
                         @if (!String.IsNullOrWhiteSpace(Model.SearchTag))
                         {
-                                <h3 style="width:50%;float:left;">
-                                    Results for search: @Model.SearchTag
-                                </h3>
-                                using (Html.BeginForm("ShowMainForm", "Main", FormMethod.Get))
-                                {
-                                    <input style="margin-bottom:10px;" class="ui button primary formButton" type="submit" value="Remove search criterias" />
-                                }
+                            <h3 style="width:50%;float:left;">
+                                Results for search: @Model.SearchTag
+                            </h3>
+                            using (Html.BeginForm("ShowMainForm", "Main", FormMethod.Get))
+                            {
+                                <input style="margin-bottom:10px;" class="ui button primary formButton" type="submit" value="Remove search criterias" />
+                            }
                         }
 
                     </div>
@@ -126,10 +127,23 @@
                                     }
                                 }
 
+                                @if (User.IsInRole("Admin") || User.Identity.Name == item.AuthorEmail)
+                                {
+                                    using (Html.BeginForm("Edit", "Article", FormMethod.Get))
+                                    {
+                                        @Html.Hidden("id", item.ArticleId)
+                                        <button type = "submit" value = "@item.ArticleId" class="ui icon button pull-right">
+                                            <i class="edit icon"></i>
+                                        </button>
+                                    }
+                                    }
+
 
                                 <h3 style="margin-left: 5%;">@item.Title</h3>
                                 <p class="article">@item.Content</p>
-
+                                <div class="form-group ">
+                                    <strong>@item.AuthorEmail</strong>
+                                </div>
                                 <div class="form-group ">
                                     <p>
                                         <strong>
@@ -179,12 +193,9 @@
                             }
                         </div>
                     </div>
-
-
-
-                    @if (User.IsInRole("Admin"))
+                    
+                    @if (User != null && User.GetType()!= typeof(WindowsPrincipal))
                     {
-
                         <div class="column" style="margin-top: 10%;">
                             <div class="ui raised segment">
                                 <div class="ui blue right ribbon label">
@@ -194,11 +205,12 @@
                                 <h3 style="margin-top: -20px;">Write your article</h3>
                                 @using (Html.BeginForm("ShowMainForm", "Main", FormMethod.Post))
                                 {
+                                    @Html.Hidden("authorName", User.Identity.Name)
                                     <div class="form-group">
                                         @Html.EditorFor(model => model.Title, new
-                                   {
-                                       htmlAttributes = new { @class = "form-control", @placeholder = "Title for article ....", @required = "required" }
-                                   })
+                                        {
+                                            htmlAttributes = new {@class = "form-control", @placeholder = "Title for article ....", @required = "required"}
+                                        })
                                     </div>
                                     <div class="form-group">
 
@@ -224,10 +236,14 @@
                                             <i class="icon edit"></i> Push article
                                         </button>
 
-                                        <button data-modal="modal4" id="call-modal-4" class="ui primary submit labeled icon button formButton">
-                                            <i class="tag icon"></i>
-                                            Add Tag
-                                        </button>
+                                        @if (User.IsInRole("Admin"))
+                                        {
+
+                                            <button data-modal="modal4" id="call-modal-4" class="ui primary submit labeled icon button formButton">
+                                                <i class="tag icon"></i>
+                                                Add Tag
+                                            </button>
+                                        }
 
                                     </div>
                                 }
